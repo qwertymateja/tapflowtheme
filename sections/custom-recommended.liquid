@@ -1,0 +1,201 @@
+<style>
+  .tf-rec {
+    padding-block: clamp(var(--tf-space-12), 8vw, var(--tf-space-20));
+    background: var(--tf-bg);
+    position: relative;
+    overflow: hidden;
+  }
+  .tf-rec__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: var(--tf-space-6);
+    margin-top: clamp(var(--tf-space-8), 5vw, var(--tf-space-12));
+  }
+  .tf-rec__card {
+    background: var(--tf-white);
+    border: 1px solid var(--tf-ink-100);
+    border-radius: var(--tf-radius-lg);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: var(--tf-shadow-sm);
+    transition:
+      transform var(--tf-duration-slow) var(--tf-ease-out),
+      box-shadow var(--tf-duration-slow) var(--tf-ease-out);
+  }
+  .tf-rec__card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--tf-shadow-lg);
+  }
+  .tf-rec__img-wrap {
+    aspect-ratio: 1 / 1;
+    background: var(--tf-mesh-light);
+    overflow: hidden;
+    position: relative;
+  }
+  .tf-rec__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform var(--tf-duration-slow) var(--tf-ease-out);
+  }
+  .tf-rec__card:hover .tf-rec__img { transform: scale(1.05); }
+  .tf-rec__sale-badge {
+    position: absolute;
+    top: var(--tf-space-3);
+    left: var(--tf-space-3);
+    background: var(--tf-gold-gradient);
+    color: var(--tf-ink-900);
+    font-size: 0.6875rem;
+    font-weight: 800;
+    letter-spacing: var(--tf-tracking-wider);
+    text-transform: uppercase;
+    padding: 0.25rem 0.625rem;
+    border-radius: var(--tf-radius-full);
+    box-shadow: var(--tf-shadow-gold);
+  }
+  .tf-rec__body {
+    padding: var(--tf-space-5);
+    display: flex;
+    flex-direction: column;
+    gap: var(--tf-space-3);
+    flex: 1;
+  }
+  .tf-rec__title {
+    font-family: var(--tf-font-display);
+    font-size: var(--tf-text-base);
+    font-weight: 700;
+    color: var(--tf-text);
+    margin: 0;
+    line-height: var(--tf-leading-snug);
+    letter-spacing: var(--tf-tracking-tight);
+  }
+  .tf-rec__rating {
+    display: flex;
+    align-items: center;
+    gap: var(--tf-space-2);
+    font-size: var(--tf-text-xs);
+    color: var(--tf-text-muted);
+  }
+  .tf-rec__stars { color: var(--tf-gold-500); letter-spacing: 1px; font-size: 0.8125rem; }
+  .tf-rec__prices {
+    display: flex;
+    align-items: baseline;
+    gap: var(--tf-space-2);
+    flex-wrap: wrap;
+  }
+  .tf-rec__price {
+    font-weight: 800;
+    font-size: var(--tf-text-lg);
+    color: var(--tf-text);
+  }
+  .tf-rec__compare {
+    font-size: var(--tf-text-sm);
+    color: var(--tf-ink-400);
+    text-decoration: line-through;
+  }
+  .tf-rec__btn {
+    margin-top: auto;
+    padding: 0.75rem 1.25rem;
+    font-family: var(--tf-font-sans);
+    font-size: var(--tf-text-xs);
+    font-weight: 700;
+    letter-spacing: var(--tf-tracking-wider);
+    text-transform: uppercase;
+    border: 1.5px solid var(--tf-indigo-500);
+    color: var(--tf-indigo-600);
+    background: transparent;
+    border-radius: var(--tf-radius-full);
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    transition:
+      background-color var(--tf-duration-base) var(--tf-ease-out),
+      color var(--tf-duration-base) var(--tf-ease-out);
+  }
+  .tf-rec__btn:hover {
+    background: var(--tf-indigo-500);
+    color: var(--tf-white);
+  }
+</style>
+
+<section class="tf-rec">
+  <div class="tf-container">
+    <div class="tf-section-header--center tf-reveal">
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="tf-eyebrow">{{ section.settings.eyebrow | escape }}</span>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h2 class="tf-section-title">{{ section.settings.heading | escape }}</h2>
+      {%- endif -%}
+    </div>
+
+    <div class="tf-rec__grid">
+      {%- for block in section.blocks -%}
+        {%- assign p = block.settings.product -%}
+        {%- if p != blank -%}
+          {%- assign delay_class = 'tf-reveal--delay-' | append: forloop.index0 -%}
+          {%- if forloop.index0 == 0 -%}{%- assign delay_class = '' -%}{%- endif -%}
+          <a href="{{ p.url }}" class="tf-rec__card tf-reveal {{ delay_class }}" {{ block.shopify_attributes }}>
+            <div class="tf-rec__img-wrap">
+              {%- if p.compare_at_price > p.price -%}
+                <span class="tf-rec__sale-badge">Akcija</span>
+              {%- endif -%}
+              {%- if p.featured_image != blank -%}
+                {{ p.featured_image | image_url: width: 480 | image_tag: class: 'tf-rec__img', loading: 'lazy', widths: '240, 360, 480', sizes: '(min-width: 750px) 25vw, 50vw', alt: p.title | escape }}
+              {%- else -%}
+                <div class="tf-rec__img" style="display:flex;align-items:center;justify-content:center;color:var(--tf-ink-300);font-size:3rem;">🖼️</div>
+              {%- endif -%}
+            </div>
+            <div class="tf-rec__body">
+              <h3 class="tf-rec__title">{{ p.title | escape }}</h3>
+              <div class="tf-rec__rating">
+                <span class="tf-rec__stars" aria-hidden="true">★ ★ ★ ★ ★</span>
+                <span>({{ block.settings.review_count | default: '0' }})</span>
+              </div>
+              <div class="tf-rec__prices">
+                <span class="tf-rec__price">{{ p.price | money }}</span>
+                {%- if p.compare_at_price > p.price -%}
+                  <span class="tf-rec__compare">{{ p.compare_at_price | money }}</span>
+                {%- endif -%}
+              </div>
+              <span class="tf-rec__btn">{{ section.settings.button_text | default: 'POGLEDAJ' | escape }}</span>
+            </div>
+          </a>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Recommended",
+  "class": "section",
+  "max_blocks": 8,
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Možda će vam se svideti" },
+    { "type": "text", "id": "button_text", "label": "Card button text", "default": "POGLEDAJ" }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Product",
+      "settings": [
+        { "type": "product", "id": "product", "label": "Product" },
+        { "type": "text", "id": "review_count", "label": "Review count", "default": "0" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Recommended",
+      "blocks": [
+        { "type": "product" }, { "type": "product" }, { "type": "product" }, { "type": "product" }
+      ]
+    }
+  ]
+}
+{% endschema %}

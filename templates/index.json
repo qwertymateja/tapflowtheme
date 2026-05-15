@@ -74,6 +74,17 @@
     "custom-before-after": {
       "type": "custom-before-after",
       "settings": {}
+    },
+    "custom-recommended": {
+      "type": "custom-recommended",
+      "blocks": {
+        "p1": { "type": "product" },
+        "p2": { "type": "product" },
+        "p3": { "type": "product" },
+        "p4": { "type": "product" }
+      },
+      "block_order": ["p1","p2","p3","p4"],
+      "settings": { "heading": "Možda će vam se svideti", "button_text": "POGLEDAJ" }
     }
   },
   "order": [
@@ -83,6 +94,7 @@
     "custom-cta-card",
     "custom-benefits-v2",
     "custom-featured-product",
-    "custom-before-after"
+    "custom-before-after",
+    "custom-recommended"
   ]
 }
