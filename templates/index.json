@@ -70,6 +70,10 @@
         "default_tier_index": 0,
         "button_text": "DODAJ U KORPU"
       }
+    },
+    "custom-before-after": {
+      "type": "custom-before-after",
+      "settings": {}
     }
   },
   "order": [
@@ -78,6 +82,7 @@
     "custom-social-proof-v2",
     "custom-cta-card",
     "custom-benefits-v2",
-    "custom-featured-product"
+    "custom-featured-product",
+    "custom-before-after"
   ]
 }

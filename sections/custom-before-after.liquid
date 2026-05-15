@@ -1,0 +1,180 @@
+<style>
+  .tf-ba {
+    padding-block: clamp(var(--tf-space-12), 8vw, var(--tf-space-20));
+    background: var(--tf-bg-subtle);
+    position: relative;
+    overflow: hidden;
+  }
+  .tf-ba__header { text-align: center; margin-bottom: clamp(var(--tf-space-10), 6vw, var(--tf-space-16)); }
+  .tf-ba__row {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: clamp(var(--tf-space-4), 3vw, var(--tf-space-8));
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  @media (max-width: 749px) {
+    .tf-ba__row { grid-template-columns: 1fr; gap: var(--tf-space-4); }
+  }
+  .tf-ba__card {
+    background: var(--tf-white);
+    border-radius: var(--tf-radius-lg);
+    padding: var(--tf-space-5);
+    box-shadow: var(--tf-shadow-lg);
+    position: relative;
+  }
+  .tf-ba__card-label {
+    position: absolute;
+    top: -12px;
+    left: var(--tf-space-5);
+    background: var(--tf-ink-900);
+    color: var(--tf-white);
+    font-size: 0.6875rem;
+    font-weight: 800;
+    letter-spacing: var(--tf-tracking-wider);
+    text-transform: uppercase;
+    padding: 0.3125rem 0.75rem;
+    border-radius: var(--tf-radius-sm);
+  }
+  .tf-ba__card--after .tf-ba__card-label {
+    background: var(--tf-gold-gradient);
+    color: var(--tf-ink-900);
+  }
+  .tf-ba__card img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: var(--tf-radius-md);
+  }
+  .tf-ba__placeholder {
+    aspect-ratio: 3 / 4;
+    background: var(--tf-mesh-light);
+    border-radius: var(--tf-radius-md);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--tf-space-2);
+    color: var(--tf-ink-400);
+  }
+  .tf-ba__placeholder-rating {
+    font-size: 3rem;
+    font-weight: 900;
+    font-family: var(--tf-font-display);
+    line-height: 1;
+  }
+  .tf-ba__placeholder-stars { color: var(--tf-gold-500); font-size: 1.5rem; letter-spacing: 4px; }
+  .tf-ba__stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--tf-space-2);
+  }
+  @media (max-width: 749px) {
+    .tf-ba__stat { flex-direction: row; justify-content: center; }
+  }
+  .tf-ba__stat-arrow {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--tf-gold-gradient);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--tf-ink-900);
+    box-shadow: var(--tf-shadow-gold);
+  }
+  @media (max-width: 749px) {
+    .tf-ba__stat-arrow { transform: rotate(90deg); }
+  }
+  .tf-ba__stat-value {
+    font-family: var(--tf-font-display);
+    font-size: var(--tf-text-2xl);
+    font-weight: 800;
+    line-height: 1;
+    background: var(--tf-gold-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .tf-ba__stat-label {
+    font-size: var(--tf-text-xs);
+    color: var(--tf-text-muted);
+    text-transform: uppercase;
+    letter-spacing: var(--tf-tracking-wider);
+    font-weight: 700;
+  }
+</style>
+
+<section class="tf-ba">
+  <div class="tf-container">
+    <div class="tf-ba__header tf-section-header--center tf-reveal">
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="tf-eyebrow">{{ section.settings.eyebrow | escape }}</span>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h2 class="tf-section-title">{{ section.settings.heading | escape }}</h2>
+      {%- endif -%}
+      {%- if section.settings.subheading != blank -%}
+        <p class="tf-section-subtitle">{{ section.settings.subheading | escape }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="tf-ba__row tf-reveal tf-reveal--delay-1">
+      <div class="tf-ba__card tf-ba__card--before">
+        <span class="tf-ba__card-label">{{ section.settings.before_label | default: 'PRE' | escape }}</span>
+        {%- if section.settings.before_image != blank -%}
+          {{ section.settings.before_image | image_url: width: 600 | image_tag: loading: 'lazy', widths: '300, 450, 600', sizes: '(min-width: 750px) 300px, 100vw', alt: 'Pre' }}
+        {%- else -%}
+          <div class="tf-ba__placeholder">
+            <span class="tf-ba__placeholder-rating">4.2</span>
+            <span class="tf-ba__placeholder-stars">★ ★ ★ ★ ☆</span>
+          </div>
+        {%- endif -%}
+      </div>
+
+      <div class="tf-ba__stat">
+        <div class="tf-ba__stat-arrow" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </div>
+        <span class="tf-ba__stat-value">{{ section.settings.stat_value | default: '+17%' | escape }}</span>
+        <span class="tf-ba__stat-label">{{ section.settings.stat_label | default: 'rast ocene' | escape }}</span>
+      </div>
+
+      <div class="tf-ba__card tf-ba__card--after">
+        <span class="tf-ba__card-label">{{ section.settings.after_label | default: 'POSLE' | escape }}</span>
+        {%- if section.settings.after_image != blank -%}
+          {{ section.settings.after_image | image_url: width: 600 | image_tag: loading: 'lazy', widths: '300, 450, 600', sizes: '(min-width: 750px) 300px, 100vw', alt: 'Posle' }}
+        {%- else -%}
+          <div class="tf-ba__placeholder">
+            <span class="tf-ba__placeholder-rating">4.9</span>
+            <span class="tf-ba__placeholder-stars">★ ★ ★ ★ ★</span>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Before / After",
+  "class": "section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Realni rezultati" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Vidite razliku za 28 dana" },
+    { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "Pre i posle uvođenja Tapflow-a kod naših klijenata." },
+    { "type": "header", "content": "Before" },
+    { "type": "text", "id": "before_label", "label": "Before label", "default": "PRE" },
+    { "type": "image_picker", "id": "before_image", "label": "Before screenshot" },
+    { "type": "header", "content": "Stat (middle)" },
+    { "type": "text", "id": "stat_value", "label": "Stat value", "default": "+17%" },
+    { "type": "text", "id": "stat_label", "label": "Stat label", "default": "rast ocene" },
+    { "type": "header", "content": "After" },
+    { "type": "text", "id": "after_label", "label": "After label", "default": "POSLE" },
+    { "type": "image_picker", "id": "after_image", "label": "After screenshot" }
+  ],
+  "presets": [ { "name": "Before / After" } ]
+}
+{% endschema %}
