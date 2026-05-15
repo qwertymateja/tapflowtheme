@@ -3595,3 +3595,43 @@ details-disclosure > details {
     transform: translateX(100%) scaleX(0);
   }
 }
+
+/* ============================================================
+   Tapflow custom styles
+   ============================================================ */
+
+/* Rounded buttons */
+.btn,
+.button,
+[type="button"],
+[type="submit"],
+.shopify-payment-button__button,
+.product-form__submit {
+  border-radius: 12px !important;
+}
+
+/* Heading letter-spacing */
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+  letter-spacing: -0.02em;
+}
+
+/* Card smooth transitions */
+.card-wrapper,
+.card {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+/* Card hover: lift + shadow */
+.card-wrapper:hover .card,
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(26, 26, 46, 0.12);
+}
+
+/* Sale badge: brand red */
+.badge--sale {
+  background-color: #EF4444;
+  color: #FFFFFF;
+}
+}

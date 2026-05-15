@@ -4,13 +4,16 @@
   "sections": {
     "announcement-bar": {
       "type": "announcement-bar",
+      "settings": {
+        "color_scheme": "scheme-5"
+      },
       "blocks": {
         "announcement-bar-0": {
           "type": "announcement",
           "settings": {
-            "text": "Welcome to our store",
+            "text": "🚀 Besplatna dostava za porudžbine od 3+ pločice!",
             "text_alignment": "center",
-            "color_scheme": "scheme-1",
+            "color_scheme": "scheme-5",
             "link": ""
           }
         }
