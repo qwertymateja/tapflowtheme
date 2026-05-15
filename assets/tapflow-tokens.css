@@ -1,0 +1,371 @@
+/* ============================================
+   TAPFLOW DESIGN SYSTEM — TOKENS
+   Premium aesthetic: indigo + gold + mesh
+   ============================================ */
+
+:root {
+  /* ---------- BRAND COLORS ---------- */
+  --tf-indigo-50:  #EEF0FF;
+  --tf-indigo-100: #E0E4FF;
+  --tf-indigo-200: #C7CEFF;
+  --tf-indigo-300: #A5AFFF;
+  --tf-indigo-400: #818BFF;
+  --tf-indigo-500: #4F46E5;   /* PRIMARY brand */
+  --tf-indigo-600: #4338CA;
+  --tf-indigo-700: #3730A3;
+  --tf-indigo-800: #1E1B4B;
+  --tf-indigo-900: #14122E;
+
+  /* ---------- GOLD ACCENTS ---------- */
+  --tf-gold-100: #FFF8E1;
+  --tf-gold-300: #FFD466;
+  --tf-gold-500: #F5B62B;     /* PRIMARY gold */
+  --tf-gold-600: #D99A1B;
+  --tf-gold-700: #A8780A;
+  --tf-gold-gradient: linear-gradient(135deg, #FFD466 0%, #F5B62B 50%, #D99A1B 100%);
+
+  /* ---------- NEUTRALS ---------- */
+  --tf-ink-900: #0A0A1F;      /* near-black, deep navy */
+  --tf-ink-800: #1A1A2E;
+  --tf-ink-700: #2A2A42;
+  --tf-ink-600: #4A4A66;
+  --tf-ink-500: #6B6B85;
+  --tf-ink-400: #9595AA;
+  --tf-ink-300: #C5C5D2;
+  --tf-ink-200: #E5E5EC;
+  --tf-ink-100: #F2F2F6;
+  --tf-ink-50:  #F8F8FB;
+  --tf-white:   #FFFFFF;
+
+  /* ---------- SEMANTIC ---------- */
+  --tf-bg:           var(--tf-white);
+  --tf-bg-subtle:    var(--tf-ink-50);
+  --tf-bg-card:      var(--tf-white);
+  --tf-text:         var(--tf-ink-800);
+  --tf-text-muted:   var(--tf-ink-500);
+  --tf-text-on-dark: var(--tf-white);
+  --tf-border:       var(--tf-ink-200);
+  --tf-border-strong:var(--tf-ink-300);
+
+  /* ---------- MESH GRADIENTS (the premium signature) ---------- */
+  /* Use as background-image on hero / featured product / CTA cards */
+  --tf-mesh-indigo:
+    radial-gradient(at 12% 18%, rgba(165, 175, 255, 0.55) 0px, transparent 50%),
+    radial-gradient(at 88% 12%, rgba(245, 182, 43, 0.20) 0px, transparent 45%),
+    radial-gradient(at 50% 95%, rgba(67, 56, 202, 0.45) 0px, transparent 50%),
+    radial-gradient(at 0% 100%, rgba(79, 70, 229, 0.65) 0px, transparent 55%),
+    linear-gradient(135deg, #4F46E5 0%, #3730A3 100%);
+
+  --tf-mesh-light:
+    radial-gradient(at 20% 20%, rgba(224, 228, 255, 0.8) 0px, transparent 50%),
+    radial-gradient(at 80% 80%, rgba(255, 248, 225, 0.6) 0px, transparent 50%),
+    linear-gradient(180deg, #F8F8FB 0%, #FFFFFF 100%);
+
+  --tf-mesh-gold:
+    radial-gradient(at 30% 30%, rgba(255, 212, 102, 0.4) 0px, transparent 50%),
+    radial-gradient(at 70% 70%, rgba(245, 182, 43, 0.3) 0px, transparent 50%),
+    linear-gradient(135deg, #FFF8E1 0%, #FFFFFF 100%);
+
+  /* ---------- LAYERED SHADOWS (depth without heaviness) ---------- */
+  --tf-shadow-xs:
+    0 1px 2px rgba(10, 10, 31, 0.04);
+  --tf-shadow-sm:
+    0 1px 2px rgba(10, 10, 31, 0.04),
+    0 2px 4px rgba(10, 10, 31, 0.04);
+  --tf-shadow-md:
+    0 2px 4px rgba(10, 10, 31, 0.04),
+    0 8px 16px rgba(10, 10, 31, 0.06);
+  --tf-shadow-lg:
+    0 4px 8px rgba(10, 10, 31, 0.04),
+    0 16px 32px rgba(10, 10, 31, 0.08),
+    0 32px 64px rgba(10, 10, 31, 0.06);
+  --tf-shadow-xl:
+    0 8px 16px rgba(10, 10, 31, 0.06),
+    0 24px 48px rgba(10, 10, 31, 0.10),
+    0 48px 96px rgba(10, 10, 31, 0.08);
+  --tf-shadow-indigo:
+    0 8px 24px rgba(79, 70, 229, 0.20),
+    0 16px 48px rgba(79, 70, 229, 0.12);
+  --tf-shadow-gold:
+    0 8px 24px rgba(245, 182, 43, 0.25),
+    0 16px 48px rgba(245, 182, 43, 0.12);
+
+  /* ---------- RADIUS ---------- */
+  --tf-radius-xs: 6px;
+  --tf-radius-sm: 10px;
+  --tf-radius-md: 16px;
+  --tf-radius-lg: 24px;
+  --tf-radius-xl: 32px;
+  --tf-radius-2xl: 48px;
+  --tf-radius-full: 9999px;
+
+  /* ---------- SPACING (8pt grid) ---------- */
+  --tf-space-1: 0.25rem;   /* 4 */
+  --tf-space-2: 0.5rem;    /* 8 */
+  --tf-space-3: 0.75rem;   /* 12 */
+  --tf-space-4: 1rem;      /* 16 */
+  --tf-space-5: 1.25rem;   /* 20 */
+  --tf-space-6: 1.5rem;    /* 24 */
+  --tf-space-8: 2rem;      /* 32 */
+  --tf-space-10: 2.5rem;   /* 40 */
+  --tf-space-12: 3rem;     /* 48 */
+  --tf-space-16: 4rem;     /* 64 */
+  --tf-space-20: 5rem;     /* 80 */
+  --tf-space-24: 6rem;     /* 96 */
+  --tf-space-32: 8rem;     /* 128 */
+
+  /* ---------- TYPOGRAPHY ---------- */
+  --tf-font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --tf-font-display: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  /* Type scale — clamped for fluid responsive */
+  --tf-text-xs:   clamp(0.75rem, 0.7rem + 0.2vw, 0.8125rem);
+  --tf-text-sm:   clamp(0.875rem, 0.85rem + 0.2vw, 0.9375rem);
+  --tf-text-base: clamp(1rem, 0.95rem + 0.25vw, 1.0625rem);
+  --tf-text-lg:   clamp(1.125rem, 1.05rem + 0.4vw, 1.25rem);
+  --tf-text-xl:   clamp(1.25rem, 1.15rem + 0.5vw, 1.5rem);
+  --tf-text-2xl:  clamp(1.5rem, 1.3rem + 1vw, 2rem);
+  --tf-text-3xl:  clamp(1.875rem, 1.5rem + 1.8vw, 2.75rem);
+  --tf-text-4xl:  clamp(2.25rem, 1.7rem + 2.5vw, 3.5rem);
+  --tf-text-5xl:  clamp(2.75rem, 2rem + 3.5vw, 4.5rem);
+
+  --tf-leading-tight: 1.15;
+  --tf-leading-snug: 1.3;
+  --tf-leading-normal: 1.5;
+  --tf-leading-relaxed: 1.65;
+
+  --tf-tracking-tight: -0.02em;
+  --tf-tracking-tighter: -0.035em;
+  --tf-tracking-wide: 0.04em;
+  --tf-tracking-wider: 0.08em;
+
+  /* ---------- TRANSITIONS ---------- */
+  --tf-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --tf-ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --tf-duration-fast: 150ms;
+  --tf-duration-base: 250ms;
+  --tf-duration-slow: 400ms;
+  --tf-duration-slower: 600ms;
+
+  /* ---------- CONTAINER ---------- */
+  --tf-container-max: 1280px;
+  --tf-container-px: clamp(1rem, 3vw, 2rem);
+}
+
+/* ============================================
+   GLOBAL TYPOGRAPHY OVERRIDES
+   ============================================ */
+body,
+.page-width,
+h1, h2, h3, h4, h5, h6,
+button, input, select, textarea {
+  font-family: var(--tf-font-sans);
+}
+
+/* ============================================
+   BLOB SHAPES (decorative SVG-free)
+   Use as ::before / ::after on parent containers
+   ============================================ */
+.tf-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.6;
+  pointer-events: none;
+  z-index: 0;
+}
+.tf-blob--indigo {
+  background: radial-gradient(circle, var(--tf-indigo-400) 0%, transparent 70%);
+}
+.tf-blob--gold {
+  background: radial-gradient(circle, var(--tf-gold-300) 0%, transparent 70%);
+}
+.tf-blob--violet {
+  background: radial-gradient(circle, var(--tf-indigo-600) 0%, transparent 70%);
+}
+
+/* ============================================
+   UTILITY: SECTION CONTAINER
+   ============================================ */
+.tf-section {
+  position: relative;
+  padding-block: clamp(var(--tf-space-12), 8vw, var(--tf-space-24));
+  overflow: hidden;
+}
+.tf-container {
+  max-width: var(--tf-container-max);
+  margin-inline: auto;
+  padding-inline: var(--tf-container-px);
+  position: relative;
+  z-index: 1;
+}
+
+/* ============================================
+   UTILITY: PREMIUM BUTTONS
+   ============================================ */
+.tf-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--tf-space-2);
+  padding: 0.875rem 1.75rem;
+  font-family: var(--tf-font-sans);
+  font-size: var(--tf-text-sm);
+  font-weight: 600;
+  letter-spacing: var(--tf-tracking-wide);
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: var(--tf-radius-full);
+  border: none;
+  cursor: pointer;
+  transition:
+    transform var(--tf-duration-base) var(--tf-ease-out),
+    box-shadow var(--tf-duration-base) var(--tf-ease-out),
+    background-color var(--tf-duration-base) var(--tf-ease-out);
+  will-change: transform;
+}
+.tf-btn:hover {
+  transform: translateY(-2px);
+}
+.tf-btn:active {
+  transform: translateY(0);
+}
+.tf-btn--primary {
+  background: var(--tf-indigo-500);
+  color: var(--tf-white);
+  box-shadow: var(--tf-shadow-indigo);
+}
+.tf-btn--primary:hover {
+  background: var(--tf-indigo-600);
+  box-shadow:
+    0 12px 32px rgba(79, 70, 229, 0.30),
+    0 24px 64px rgba(79, 70, 229, 0.18);
+}
+.tf-btn--gold {
+  background: var(--tf-gold-gradient);
+  color: var(--tf-ink-900);
+  box-shadow: var(--tf-shadow-gold);
+}
+.tf-btn--gold:hover {
+  box-shadow:
+    0 12px 32px rgba(245, 182, 43, 0.35),
+    0 24px 64px rgba(245, 182, 43, 0.18);
+}
+.tf-btn--on-dark {
+  background: var(--tf-white);
+  color: var(--tf-ink-900);
+  box-shadow:
+    0 4px 12px rgba(0, 0, 0, 0.15),
+    0 12px 32px rgba(0, 0, 0, 0.10);
+}
+.tf-btn--on-dark:hover {
+  background: var(--tf-indigo-50);
+}
+
+/* ============================================
+   UTILITY: PREMIUM CARDS
+   ============================================ */
+.tf-card {
+  background: var(--tf-bg-card);
+  border-radius: var(--tf-radius-lg);
+  box-shadow: var(--tf-shadow-md);
+  transition:
+    transform var(--tf-duration-slow) var(--tf-ease-out),
+    box-shadow var(--tf-duration-slow) var(--tf-ease-out);
+}
+.tf-card--hover:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--tf-shadow-lg);
+}
+.tf-card--mesh {
+  background: var(--tf-mesh-indigo);
+  color: var(--tf-text-on-dark);
+  border-radius: var(--tf-radius-xl);
+  box-shadow: var(--tf-shadow-xl);
+  position: relative;
+  overflow: hidden;
+}
+
+/* ============================================
+   ANIMATIONS — fade-in on scroll
+   Triggered via IntersectionObserver in tapflow-animations.js
+   ============================================ */
+.tf-reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity var(--tf-duration-slower) var(--tf-ease-out),
+    transform var(--tf-duration-slower) var(--tf-ease-out);
+  will-change: opacity, transform;
+}
+.tf-reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.tf-reveal--delay-1 { transition-delay: 80ms; }
+.tf-reveal--delay-2 { transition-delay: 160ms; }
+.tf-reveal--delay-3 { transition-delay: 240ms; }
+.tf-reveal--delay-4 { transition-delay: 320ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  .tf-reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .tf-btn,
+  .tf-card,
+  .tf-card--hover {
+    transition: none !important;
+  }
+}
+
+/* ============================================
+   GOLD ACCENT TEXT
+   ============================================ */
+.tf-text-gold {
+  background: var(--tf-gold-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  display: inline-block;
+}
+
+/* ============================================
+   SECTION HEADING (reusable)
+   ============================================ */
+.tf-eyebrow {
+  display: inline-block;
+  font-size: var(--tf-text-xs);
+  font-weight: 600;
+  letter-spacing: var(--tf-tracking-wider);
+  text-transform: uppercase;
+  color: var(--tf-indigo-500);
+  background: var(--tf-indigo-50);
+  padding: 0.375rem 0.875rem;
+  border-radius: var(--tf-radius-full);
+  margin-bottom: var(--tf-space-4);
+}
+.tf-section-title {
+  font-family: var(--tf-font-display);
+  font-size: var(--tf-text-3xl);
+  font-weight: 800;
+  letter-spacing: var(--tf-tracking-tight);
+  line-height: var(--tf-leading-tight);
+  color: var(--tf-text);
+  margin: 0 0 var(--tf-space-4);
+}
+.tf-section-subtitle {
+  font-size: var(--tf-text-lg);
+  line-height: var(--tf-leading-relaxed);
+  color: var(--tf-text-muted);
+  max-width: 60ch;
+  margin: 0;
+}
+.tf-section-header--center {
+  text-align: center;
+  margin-inline: auto;
+}
+.tf-section-header--center .tf-section-subtitle {
+  margin-inline: auto;
+}
