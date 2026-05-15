@@ -1,0 +1,207 @@
+<style>
+  .tf-how {
+    padding-block: clamp(var(--tf-space-12), 8vw, var(--tf-space-24));
+    background: var(--tf-bg-subtle);
+    position: relative;
+    overflow: hidden;
+  }
+  .tf-how__bg-blob {
+    position: absolute;
+    top: 20%;
+    right: -100px;
+    width: 360px;
+    height: 360px;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--tf-indigo-100) 0%, transparent 65%);
+    opacity: 0.6;
+    filter: blur(60px);
+    z-index: 0;
+    pointer-events: none;
+  }
+  .tf-how__steps {
+    position: relative;
+    margin-top: clamp(var(--tf-space-10), 6vw, var(--tf-space-16));
+    z-index: 1;
+  }
+  .tf-how__steps::before {
+    content: '';
+    position: absolute;
+    left: 40px;
+    top: 60px;
+    bottom: 60px;
+    width: 2px;
+    background-image: linear-gradient(to bottom, var(--tf-indigo-300) 50%, transparent 50%);
+    background-size: 2px 12px;
+    background-repeat: repeat-y;
+    z-index: 0;
+  }
+  @media (max-width: 749px) {
+    .tf-how__steps::before { display: none; }
+  }
+  .tf-how__step {
+    display: grid;
+    grid-template-columns: 80px 1fr auto;
+    align-items: center;
+    gap: clamp(var(--tf-space-4), 3vw, var(--tf-space-8));
+    padding: var(--tf-space-6) 0;
+    position: relative;
+    z-index: 1;
+  }
+  @media (max-width: 749px) {
+    .tf-how__step {
+      grid-template-columns: auto 1fr;
+      grid-template-rows: auto auto;
+      gap: var(--tf-space-3);
+    }
+  }
+  .tf-how__num {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: var(--tf-white);
+    box-shadow: var(--tf-shadow-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--tf-font-display);
+    font-size: var(--tf-text-2xl);
+    font-weight: 900;
+    background-image: var(--tf-gold-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    position: relative;
+    flex-shrink: 0;
+  }
+  .tf-how__num::after {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    background: var(--tf-gold-gradient);
+    z-index: -1;
+    opacity: 0.4;
+    filter: blur(8px);
+  }
+  @media (max-width: 749px) {
+    .tf-how__num { width: 56px; height: 56px; font-size: var(--tf-text-lg); }
+  }
+  .tf-how__content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--tf-space-2);
+  }
+  @media (max-width: 749px) {
+    .tf-how__content { grid-column: 2; }
+  }
+  .tf-how__title {
+    font-family: var(--tf-font-display);
+    font-size: var(--tf-text-xl);
+    font-weight: 800;
+    color: var(--tf-text);
+    margin: 0;
+    line-height: var(--tf-leading-snug);
+    letter-spacing: var(--tf-tracking-tight);
+  }
+  .tf-how__desc {
+    font-size: var(--tf-text-base);
+    color: var(--tf-text-muted);
+    line-height: var(--tf-leading-relaxed);
+    margin: 0;
+    max-width: 52ch;
+  }
+  .tf-how__image {
+    width: 200px;
+    aspect-ratio: 4 / 3;
+    background: var(--tf-mesh-light);
+    border-radius: var(--tf-radius-md);
+    overflow: hidden;
+    box-shadow: var(--tf-shadow-md);
+    flex-shrink: 0;
+  }
+  .tf-how__image img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .tf-how__image-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--tf-ink-300);
+    font-size: 2rem;
+  }
+  @media (max-width: 989px) {
+    .tf-how__image { display: none; }
+  }
+</style>
+
+<section class="tf-how">
+  <div class="tf-how__bg-blob" aria-hidden="true"></div>
+  <div class="tf-container">
+    <div class="tf-section-header--center tf-reveal">
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="tf-eyebrow">{{ section.settings.eyebrow | escape }}</span>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h2 class="tf-section-title">{{ section.settings.heading | escape }}</h2>
+      {%- endif -%}
+      {%- if section.settings.subheading != blank -%}
+        <p class="tf-section-subtitle">{{ section.settings.subheading | escape }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="tf-how__steps">
+      {%- for block in section.blocks -%}
+        {%- assign delay_class = 'tf-reveal--delay-' | append: forloop.index0 -%}
+        {%- if forloop.index0 == 0 -%}{%- assign delay_class = '' -%}{%- endif -%}
+        <div class="tf-how__step tf-reveal {{ delay_class }}" {{ block.shopify_attributes }}>
+          <div class="tf-how__num">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</div>
+          <div class="tf-how__content">
+            <h3 class="tf-how__title">{{ block.settings.title | escape }}</h3>
+            <p class="tf-how__desc">{{ block.settings.description | escape }}</p>
+          </div>
+          <div class="tf-how__image">
+            {%- if block.settings.image != blank -%}
+              {{ block.settings.image | image_url: width: 400 | image_tag: loading: 'lazy', widths: '200, 300, 400', sizes: '200px', alt: block.settings.title | escape }}
+            {%- else -%}
+              <div class="tf-how__image-placeholder">📱</div>
+            {%- endif -%}
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "How it works v2",
+  "class": "section",
+  "max_blocks": 6,
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Kako funkcioniše" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Kako Tapflow funkcioniše — u 3 koraka!" },
+    { "type": "textarea", "id": "subheading", "label": "Subheading" }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Korak 1" },
+        { "type": "textarea", "id": "description", "label": "Description", "default": "Opis koraka…" },
+        { "type": "image_picker", "id": "image", "label": "Demo image" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "How it works v2",
+      "blocks": [
+        { "type": "step", "settings": { "title": "Prislonite telefon", "description": "Otključajte telefon i prislonite ga na Tapflow pločicu." } },
+        { "type": "step", "settings": { "title": "Otvorite link", "description": "Otvorite link koji će se pojaviti na ekranu kao notifikacija. Link vodi do stranice za Google recenziju." } },
+        { "type": "step", "settings": { "title": "Ostavite ocenu", "description": "Ostavite ocenu i napišite svoj utisak." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

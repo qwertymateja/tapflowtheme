@@ -85,6 +85,19 @@
       },
       "block_order": ["p1","p2","p3","p4"],
       "settings": { "heading": "Možda će vam se svideti", "button_text": "POGLEDAJ" }
+    },
+    "custom-how-it-works-v2": {
+      "type": "custom-how-it-works-v2",
+      "blocks": {
+        "s1": { "type": "step", "settings": { "title": "Prislonite telefon", "description": "Otključajte telefon i prislonite ga na Tapflow pločicu." } },
+        "s2": { "type": "step", "settings": { "title": "Otvorite link", "description": "Otvorite link koji će se pojaviti na ekranu kao notifikacija. Link vodi do stranice za Google recenziju." } },
+        "s3": { "type": "step", "settings": { "title": "Ostavite ocenu", "description": "Ostavite ocenu i napišite svoj utisak." } }
+      },
+      "block_order": ["s1","s2","s3"],
+      "settings": {
+        "eyebrow": "Kako funkcioniše",
+        "heading": "Kako Tapflow funkcioniše — u 3 koraka!"
+      }
     }
   },
   "order": [
@@ -95,6 +108,7 @@
     "custom-benefits-v2",
     "custom-featured-product",
     "custom-before-after",
-    "custom-recommended"
+    "custom-recommended",
+    "custom-how-it-works-v2"
   ]
 }
