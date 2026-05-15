@@ -31,6 +31,21 @@
         "secondary_text": "Besplatna dostava • Garancija 30 dana"
       }
     },
+    "custom-benefits-v2": {
+      "type": "custom-benefits-v2",
+      "blocks": {
+        "b1": { "type": "benefit", "settings": { "icon": "link", "title": "Direktan pristup stranici za recenzije", "description": "Bez koraka, bez čekanja." } },
+        "b2": { "type": "benefit", "settings": { "icon": "bolt", "title": "Brzo i lako za korišćenje", "description": "Samo prislonite telefon — gotovo." } },
+        "b3": { "type": "benefit", "settings": { "icon": "users", "title": "Više lojalnih mušterija", "description": "Stvarna povezanost sa kupcima." } },
+        "b4": { "type": "benefit", "settings": { "icon": "trending", "title": "Bolje rangiranje na Google-u", "description": "Više recenzija = veća vidljivost." } }
+      },
+      "block_order": ["b1", "b2", "b3", "b4"],
+      "settings": {
+        "eyebrow": "Zašto Tapflow",
+        "heading": "Sve što vam treba za više Google recenzija",
+        "subheading": "Bez aplikacija, bez komplikacija — samo rezultati."
+      }
+    },
     "featured_collection": {
       "type": "featured-collection",
       "settings": {
@@ -58,6 +73,7 @@
     "custom-hero-v2",
     "custom-social-proof-v2",
     "custom-cta-card",
+    "custom-benefits-v2",
     "featured_collection"
   ]
 }
