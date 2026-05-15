@@ -1,0 +1,609 @@
+<style>
+  .tf-fp {
+    padding-block: clamp(var(--tf-space-12), 8vw, var(--tf-space-20));
+    background: var(--tf-bg);
+    position: relative;
+    overflow: hidden;
+  }
+  .tf-fp__bg-blob {
+    position: absolute;
+    top: 10%;
+    left: -120px;
+    width: 360px;
+    height: 360px;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--tf-indigo-100) 0%, transparent 70%);
+    opacity: 0.5;
+    filter: blur(60px);
+    z-index: 0;
+    pointer-events: none;
+  }
+  .tf-fp__grid {
+    display: grid;
+    grid-template-columns: 45fr 55fr;
+    gap: clamp(var(--tf-space-6), 4vw, var(--tf-space-12));
+    align-items: start;
+    position: relative;
+    z-index: 1;
+  }
+  @media (max-width: 749px) {
+    .tf-fp__grid { grid-template-columns: 1fr; gap: var(--tf-space-6); }
+  }
+  .tf-fp__media {
+    position: sticky;
+    top: var(--tf-space-8);
+  }
+  @media (max-width: 749px) {
+    .tf-fp__media { position: static; }
+  }
+  .tf-fp__media-main {
+    aspect-ratio: 1 / 1;
+    background: var(--tf-mesh-light);
+    border-radius: var(--tf-radius-xl);
+    overflow: hidden;
+    box-shadow: var(--tf-shadow-lg);
+    position: relative;
+  }
+  .tf-fp__media-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+  }
+  .tf-fp__media-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--tf-ink-300);
+    font-size: 5rem;
+  }
+  .tf-fp__thumbs {
+    margin-top: var(--tf-space-3);
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: var(--tf-space-2);
+  }
+  .tf-fp__thumb {
+    aspect-ratio: 1 / 1;
+    background: var(--tf-ink-50);
+    border-radius: var(--tf-radius-sm);
+    overflow: hidden;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: border-color var(--tf-duration-base) var(--tf-ease-out);
+  }
+  .tf-fp__thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .tf-fp__thumb.is-active {
+    border-color: var(--tf-indigo-500);
+  }
+  .tf-fp__content {
+    padding-top: var(--tf-space-2);
+  }
+  .tf-fp__rating {
+    display: flex;
+    align-items: center;
+    gap: var(--tf-space-2);
+    font-size: var(--tf-text-sm);
+    color: var(--tf-text-muted);
+    margin-bottom: var(--tf-space-3);
+  }
+  .tf-fp__stars {
+    color: var(--tf-gold-500);
+    letter-spacing: 1px;
+    font-size: 0.9375rem;
+  }
+  .tf-fp__title {
+    font-family: var(--tf-font-display);
+    font-size: var(--tf-text-3xl);
+    font-weight: 800;
+    line-height: var(--tf-leading-tight);
+    letter-spacing: var(--tf-tracking-tight);
+    color: var(--tf-text);
+    margin: 0 0 var(--tf-space-5);
+  }
+  .tf-fp__features {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 var(--tf-space-6);
+    display: grid;
+    gap: var(--tf-space-2);
+  }
+  .tf-fp__features li {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--tf-space-2);
+    font-size: var(--tf-text-base);
+    color: var(--tf-text);
+    line-height: var(--tf-leading-snug);
+  }
+  .tf-fp__check {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: var(--tf-indigo-50);
+    color: var(--tf-indigo-600);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2px;
+  }
+  .tf-fp__check svg { width: 12px; height: 12px; }
+  .tf-fp__tiers {
+    display: flex;
+    flex-direction: column;
+    gap: var(--tf-space-3);
+    margin-bottom: var(--tf-space-6);
+  }
+  .tf-fp__tier {
+    position: relative;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: var(--tf-space-4);
+    padding: var(--tf-space-4) var(--tf-space-5);
+    background: var(--tf-white);
+    border: 1.5px solid var(--tf-ink-200);
+    border-radius: var(--tf-radius-md);
+    cursor: pointer;
+    transition:
+      border-color var(--tf-duration-base) var(--tf-ease-out),
+      box-shadow var(--tf-duration-base) var(--tf-ease-out),
+      transform var(--tf-duration-base) var(--tf-ease-out);
+  }
+  .tf-fp__tier:hover {
+    border-color: var(--tf-indigo-300);
+    transform: translateY(-1px);
+    box-shadow: var(--tf-shadow-sm);
+  }
+  .tf-fp__tier.is-selected {
+    border-color: var(--tf-indigo-500);
+    background: linear-gradient(135deg, var(--tf-indigo-50) 0%, var(--tf-white) 60%);
+    box-shadow:
+      0 0 0 1px var(--tf-indigo-500),
+      var(--tf-shadow-sm);
+  }
+  .tf-fp__tier-radio {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid var(--tf-ink-300);
+    flex-shrink: 0;
+    position: relative;
+    transition: border-color var(--tf-duration-base) var(--tf-ease-out);
+  }
+  .tf-fp__tier.is-selected .tf-fp__tier-radio {
+    border-color: var(--tf-indigo-500);
+  }
+  .tf-fp__tier.is-selected .tf-fp__tier-radio::after {
+    content: '';
+    position: absolute;
+    inset: 3px;
+    background: var(--tf-indigo-500);
+    border-radius: 50%;
+  }
+  .tf-fp__tier-info { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+  .tf-fp__tier-name {
+    font-weight: 700;
+    font-size: var(--tf-text-base);
+    color: var(--tf-text);
+    letter-spacing: var(--tf-tracking-tight);
+  }
+  .tf-fp__tier-desc {
+    font-size: var(--tf-text-xs);
+    color: var(--tf-text-muted);
+  }
+  .tf-fp__tier-prices {
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2px;
+  }
+  .tf-fp__tier-price {
+    font-weight: 800;
+    font-size: var(--tf-text-lg);
+    color: var(--tf-text);
+    line-height: 1;
+  }
+  .tf-fp__tier-compare {
+    font-size: var(--tf-text-xs);
+    color: var(--tf-ink-400);
+    text-decoration: line-through;
+    line-height: 1;
+  }
+  .tf-fp__tier-badge {
+    position: absolute;
+    top: -10px;
+    right: var(--tf-space-4);
+    background: var(--tf-gold-gradient);
+    color: var(--tf-ink-900);
+    font-size: 0.6875rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: var(--tf-tracking-wide);
+    padding: 0.25rem 0.625rem;
+    border-radius: var(--tf-radius-full);
+    box-shadow: var(--tf-shadow-gold);
+    white-space: nowrap;
+  }
+  .tf-fp__add {
+    width: 100%;
+    padding: 1rem 1.75rem;
+    font-size: var(--tf-text-sm);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: var(--tf-tracking-wide);
+    background: var(--tf-indigo-500);
+    color: var(--tf-white);
+    border: none;
+    border-radius: var(--tf-radius-full);
+    cursor: pointer;
+    transition:
+      transform var(--tf-duration-base) var(--tf-ease-out),
+      box-shadow var(--tf-duration-base) var(--tf-ease-out),
+      background-color var(--tf-duration-base) var(--tf-ease-out);
+    box-shadow: var(--tf-shadow-indigo);
+    margin-bottom: var(--tf-space-5);
+  }
+  .tf-fp__add:hover {
+    transform: translateY(-2px);
+    background: var(--tf-indigo-600);
+    box-shadow:
+      0 12px 32px rgba(79, 70, 229, 0.30),
+      0 24px 64px rgba(79, 70, 229, 0.18);
+  }
+  .tf-fp__add:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+  .tf-fp__details {
+    border-top: 1px solid var(--tf-ink-200);
+  }
+  .tf-fp__detail {
+    border-bottom: 1px solid var(--tf-ink-200);
+  }
+  .tf-fp__detail summary {
+    list-style: none;
+    cursor: pointer;
+    padding: var(--tf-space-4) 0;
+    font-weight: 600;
+    color: var(--tf-text);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--tf-space-3);
+    font-size: var(--tf-text-sm);
+  }
+  .tf-fp__detail summary::-webkit-details-marker { display: none; }
+  .tf-fp__detail-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--tf-ink-50);
+    color: var(--tf-indigo-600);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .tf-fp__detail-icon svg { width: 14px; height: 14px; }
+  .tf-fp__detail-label { flex: 1; }
+  .tf-fp__detail-chevron {
+    transition: transform var(--tf-duration-base) var(--tf-ease-out);
+    color: var(--tf-text-muted);
+  }
+  .tf-fp__detail[open] .tf-fp__detail-chevron { transform: rotate(180deg); }
+  .tf-fp__detail-body {
+    padding: 0 0 var(--tf-space-4) calc(28px + var(--tf-space-3));
+    font-size: var(--tf-text-sm);
+    color: var(--tf-text-muted);
+    line-height: var(--tf-leading-relaxed);
+  }
+</style>
+
+{%- liquid
+  assign product = section.settings.product
+  assign default_tier_index = section.settings.default_tier_index | default: 0
+-%}
+
+<section class="tf-fp">
+  <div class="tf-fp__bg-blob" aria-hidden="true"></div>
+  <div class="tf-container">
+    <div class="tf-fp__grid">
+      <!-- MEDIA COLUMN -->
+      <div class="tf-fp__media tf-reveal">
+        <div class="tf-fp__media-main">
+          {%- if section.settings.main_image != blank -%}
+            {{
+              section.settings.main_image
+              | image_url: width: 1200
+              | image_tag:
+                class: 'tf-fp__media-img',
+                loading: 'lazy',
+                widths: '480, 720, 960, 1200',
+                sizes: '(min-width: 750px) 45vw, 100vw',
+                alt: section.settings.title | default: 'Product image' | escape,
+                id: 'tf-fp-main-img'
+            }}
+          {%- elsif product != blank and product.featured_image != blank -%}
+            {{
+              product.featured_image
+              | image_url: width: 1200
+              | image_tag:
+                class: 'tf-fp__media-img',
+                loading: 'lazy',
+                widths: '480, 720, 960, 1200',
+                sizes: '(min-width: 750px) 45vw, 100vw',
+                id: 'tf-fp-main-img'
+            }}
+          {%- else -%}
+            <div class="tf-fp__media-placeholder">🟦</div>
+          {%- endif -%}
+        </div>
+
+        {%- assign thumb_blocks = section.blocks | where: 'type', 'thumb' -%}
+        {%- if thumb_blocks.size > 0 -%}
+          <div class="tf-fp__thumbs" data-tf-thumbs>
+            {%- for block in thumb_blocks -%}
+              {%- if block.settings.image != blank -%}
+                <button
+                  type="button"
+                  class="tf-fp__thumb{% if forloop.first %} is-active{% endif %}"
+                  data-tf-thumb
+                  data-src="{{ block.settings.image | image_url: width: 1200 }}"
+                  aria-label="Image {{ forloop.index }}"
+                  {{ block.shopify_attributes }}
+                >
+                  {{ block.settings.image | image_url: width: 160 | image_tag: loading: 'lazy', alt: '' }}
+                </button>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+
+      <!-- CONTENT COLUMN -->
+      <div class="tf-fp__content tf-reveal tf-reveal--delay-1">
+        {%- if section.settings.show_rating -%}
+          <div class="tf-fp__rating">
+            <span class="tf-fp__stars" aria-hidden="true">★ ★ ★ ★ ★</span>
+            <span>{{ section.settings.rating_value | default: '5.0' }} | {{ section.settings.rating_count | default: '1.298' }} {{ section.settings.rating_label | default: 'recenzija' }}</span>
+          </div>
+        {%- endif -%}
+
+        <h2 class="tf-fp__title">{{ section.settings.title | default: 'Google pločica' | escape }}</h2>
+
+        {%- assign feature_blocks = section.blocks | where: 'type', 'feature' -%}
+        {%- if feature_blocks.size > 0 -%}
+          <ul class="tf-fp__features">
+            {%- for block in feature_blocks -%}
+              <li {{ block.shopify_attributes }}>
+                <span class="tf-fp__check" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </span>
+                {{ block.settings.text | escape }}
+              </li>
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+
+        <!-- TIER PICKER -->
+        {%- assign tier_blocks = section.blocks | where: 'type', 'tier' -%}
+        {%- if tier_blocks.size > 0 and product != blank -%}
+          {%- form 'product', product, id: 'tf-fp-form', class: 'tf-fp__form' -%}
+            <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+            <input type="hidden" name="quantity" id="tf-fp-qty" value="1">
+
+            <div class="tf-fp__tiers" data-tf-tiers>
+              {%- for block in tier_blocks -%}
+                {%- assign is_selected = false -%}
+                {%- if forloop.index0 == default_tier_index -%}{%- assign is_selected = true -%}{%- endif -%}
+                <label
+                  class="tf-fp__tier{% if is_selected %} is-selected{% endif %}"
+                  data-tf-tier
+                  data-qty="{{ block.settings.quantity | default: 1 }}"
+                  data-variant="{{ block.settings.variant_id }}"
+                  {{ block.shopify_attributes }}
+                >
+                  {%- if block.settings.badge != blank -%}
+                    <span class="tf-fp__tier-badge">{{ block.settings.badge | escape }}</span>
+                  {%- endif -%}
+                  <span class="tf-fp__tier-radio" aria-hidden="true"></span>
+                  <span class="tf-fp__tier-info">
+                    <span class="tf-fp__tier-name">{{ block.settings.name | escape }}</span>
+                    {%- if block.settings.description != blank -%}
+                      <span class="tf-fp__tier-desc">{{ block.settings.description | escape }}</span>
+                    {%- endif -%}
+                  </span>
+                  <span class="tf-fp__tier-prices">
+                    <span class="tf-fp__tier-price">{{ block.settings.price | escape }}</span>
+                    {%- if block.settings.compare_price != blank -%}
+                      <span class="tf-fp__tier-compare">{{ block.settings.compare_price | escape }}</span>
+                    {%- endif -%}
+                  </span>
+                  <input type="radio" name="tf-tier" value="{{ forloop.index0 }}" {% if is_selected %}checked{% endif %} hidden>
+                </label>
+              {%- endfor -%}
+            </div>
+
+            <button type="submit" class="tf-fp__add" data-tf-add>
+              {{ section.settings.button_text | default: 'DODAJ U KORPU' | escape }}
+            </button>
+          {%- endform -%}
+        {%- elsif tier_blocks.size > 0 -%}
+          <div class="tf-fp__tiers">
+            {%- for block in tier_blocks -%}
+              <div class="tf-fp__tier{% if forloop.index0 == default_tier_index %} is-selected{% endif %}" {{ block.shopify_attributes }}>
+                {%- if block.settings.badge != blank -%}
+                  <span class="tf-fp__tier-badge">{{ block.settings.badge | escape }}</span>
+                {%- endif -%}
+                <span class="tf-fp__tier-radio" aria-hidden="true"></span>
+                <span class="tf-fp__tier-info">
+                  <span class="tf-fp__tier-name">{{ block.settings.name | escape }}</span>
+                  {%- if block.settings.description != blank -%}
+                    <span class="tf-fp__tier-desc">{{ block.settings.description | escape }}</span>
+                  {%- endif -%}
+                </span>
+                <span class="tf-fp__tier-prices">
+                  <span class="tf-fp__tier-price">{{ block.settings.price | escape }}</span>
+                  {%- if block.settings.compare_price != blank -%}
+                    <span class="tf-fp__tier-compare">{{ block.settings.compare_price | escape }}</span>
+                  {%- endif -%}
+                </span>
+              </div>
+            {%- endfor -%}
+          </div>
+          <p style="font-size: var(--tf-text-sm); color: var(--tf-text-muted); margin: 0 0 var(--tf-space-5);">
+            Select a product in section settings to enable Add to Cart.
+          </p>
+        {%- endif -%}
+
+        <!-- DETAILS ACCORDION -->
+        {%- assign detail_blocks = section.blocks | where: 'type', 'detail' -%}
+        {%- if detail_blocks.size > 0 -%}
+          <div class="tf-fp__details">
+            {%- for block in detail_blocks -%}
+              <details class="tf-fp__detail" {{ block.shopify_attributes }}>
+                <summary>
+                  <span class="tf-fp__detail-icon" aria-hidden="true">
+                    {%- case block.settings.icon -%}
+                      {%- when 'doc' -%}
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                      {%- when 'truck' -%}
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+                      {%- when 'clock' -%}
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                      {%- else -%}
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                    {%- endcase -%}
+                  </span>
+                  <span class="tf-fp__detail-label">{{ block.settings.label | escape }}</span>
+                  <span class="tf-fp__detail-chevron" aria-hidden="true">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+                  </span>
+                </summary>
+                <div class="tf-fp__detail-body">{{ block.settings.content }}</div>
+              </details>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+(function(){
+  const root = document.currentScript.previousElementSibling;
+  if (!root) return;
+  const thumbs = root.querySelectorAll('[data-tf-thumb]');
+  const main = root.querySelector('#tf-fp-main-img');
+  thumbs.forEach(t => {
+    t.addEventListener('click', () => {
+      thumbs.forEach(x => x.classList.remove('is-active'));
+      t.classList.add('is-active');
+      if (main && t.dataset.src) main.src = t.dataset.src;
+    });
+  });
+
+  const tiers = root.querySelectorAll('[data-tf-tier]');
+  const qtyInput = root.querySelector('#tf-fp-qty');
+  const variantInput = root.querySelector('input[name="id"]');
+  tiers.forEach(tier => {
+    tier.addEventListener('click', (e) => {
+      if (e.target.tagName === 'A') return;
+      tiers.forEach(t => t.classList.remove('is-selected'));
+      tier.classList.add('is-selected');
+      const radio = tier.querySelector('input[type="radio"]');
+      if (radio) radio.checked = true;
+      if (qtyInput && tier.dataset.qty) qtyInput.value = tier.dataset.qty;
+      if (variantInput && tier.dataset.variant && tier.dataset.variant !== '') {
+        variantInput.value = tier.dataset.variant;
+      }
+    });
+  });
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Featured product",
+  "class": "section",
+  "settings": [
+    { "type": "header", "content": "Product" },
+    { "type": "product", "id": "product", "label": "Linked product (for Add to Cart)" },
+    { "type": "image_picker", "id": "main_image", "label": "Main image (overrides product image)" },
+    { "type": "text", "id": "title", "label": "Title", "default": "Google pločica" },
+    { "type": "checkbox", "id": "show_rating", "label": "Show rating", "default": true },
+    { "type": "text", "id": "rating_value", "label": "Rating value", "default": "5.0" },
+    { "type": "text", "id": "rating_count", "label": "Rating count", "default": "1.298" },
+    { "type": "text", "id": "rating_label", "label": "Rating label (after count)", "default": "recenzija" },
+    { "type": "range", "id": "default_tier_index", "label": "Default selected tier (0-based)", "min": 0, "max": 9, "step": 1, "default": 0 },
+    { "type": "text", "id": "button_text", "label": "Add to cart button text", "default": "DODAJ U KORPU" }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature bullet",
+      "settings": [
+        { "type": "text", "id": "text", "label": "Bullet text", "default": "Postanite PRVI na Google-u!" }
+      ]
+    },
+    {
+      "type": "tier",
+      "name": "Pricing tier",
+      "settings": [
+        { "type": "text", "id": "name", "label": "Tier name", "default": "1 PLOČICA" },
+        { "type": "text", "id": "description", "label": "Description", "default": "Besplatan stalak" },
+        { "type": "text", "id": "price", "label": "Price", "default": "3.199 RSD" },
+        { "type": "text", "id": "compare_price", "label": "Compare price (struck through)", "default": "4.199 RSD" },
+        { "type": "text", "id": "badge", "label": "Badge (gold pill, optional)" },
+        { "type": "number", "id": "quantity", "label": "Cart quantity", "default": 1 },
+        { "type": "text", "id": "variant_id", "label": "Variant ID (optional override)" }
+      ]
+    },
+    {
+      "type": "thumb",
+      "name": "Thumbnail",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Thumbnail image" }
+      ]
+    },
+    {
+      "type": "detail",
+      "name": "Detail row",
+      "settings": [
+        { "type": "select", "id": "icon", "label": "Icon", "options": [
+          { "value": "doc", "label": "Document" },
+          { "value": "truck", "label": "Truck" },
+          { "value": "clock", "label": "Clock" }
+        ], "default": "doc" },
+        { "type": "text", "id": "label", "label": "Label", "default": "Opis proizvoda" },
+        { "type": "richtext", "id": "content", "label": "Content", "default": "<p>Detaljan opis proizvoda…</p>" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured product",
+      "blocks": [
+        { "type": "feature", "settings": { "text": "Postanite PRVI na Google-u!" } },
+        { "type": "feature", "settings": { "text": "Google recenzija za 3 sekunde!" } },
+        { "type": "feature", "settings": { "text": "Uz svaku pločicu dobijate stalak!" } },
+        { "type": "feature", "settings": { "text": "Samolepljiva pozadina!" } },
+        { "type": "tier", "settings": { "name": "1 PLOČICA", "description": "Besplatan stalak", "price": "3.199 RSD", "compare_price": "4.199 RSD", "quantity": 1 } },
+        { "type": "tier", "settings": { "name": "2 PLOČICE", "description": "Besplatan stalak", "price": "5.399 RSD", "compare_price": "6.398 RSD", "badge": "Uštedeli 999 RSD", "quantity": 2 } },
+        { "type": "tier", "settings": { "name": "3 PLOČICE", "description": "Besplatna dostava + stalak", "price": "7.199 RSD", "compare_price": "9.597 RSD", "badge": "Uštedeli 2.398 RSD", "quantity": 3 } },
+        { "type": "tier", "settings": { "name": "5 PLOČICA", "description": "Besplatna dostava + stalak", "price": "10.999 RSD", "compare_price": "15.995 RSD", "badge": "Uštedeli 4.996 RSD", "quantity": 5 } },
+        { "type": "detail", "settings": { "icon": "doc", "label": "Opis proizvoda", "content": "<p>NFC pločica koja omogućava klijentima da jednim dodirom telefona ostave recenziju na Google-u.</p>" } },
+        { "type": "detail", "settings": { "icon": "clock", "label": "Rok izrade", "content": "<p>Pločice se izrađuju u roku od 2-3 radna dana, dostava traje dodatnih 1-2 dana.</p>" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
