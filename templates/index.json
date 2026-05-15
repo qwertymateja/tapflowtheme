@@ -98,6 +98,19 @@
         "eyebrow": "Kako funkcioniše",
         "heading": "Kako Tapflow funkcioniše — u 3 koraka!"
       }
+    },
+    "custom-faq": {
+      "type": "custom-faq",
+      "blocks": {
+        "q1": { "type": "qa", "settings": { "question": "Kako funkcionišu Tapflow proizvodi?", "answer": "<p>Tapflow proizvodi koriste NFC tehnologiju. Klijent prisloni telefon na pločicu i otvara se direktan link ka vašoj Google stranici za recenzije.</p>" } },
+        "q2": { "type": "qa", "settings": { "question": "Da li mi je potreban Google my Business profil?", "answer": "<p>Da, potreban vam je aktivan Google Business Profile (besplatno se otvara) da bismo mogli da povežemo Tapflow sa vašom stranicom za recenzije.</p>" } },
+        "q3": { "type": "qa", "settings": { "question": "Da li su vaši proizvodi kompatibilni sa svim pametnim telefonima?", "answer": "<p>Da, Tapflow radi sa svim telefonima koji podržavaju NFC (svi iPhone XR i noviji, Android telefoni iz poslednjih 8 godina) i sa svim telefonima preko QR koda na pločici.</p>" } },
+        "q4": { "type": "qa", "settings": { "question": "Kako funkcioniše tehnologija bez kontakta?", "answer": "<p>NFC čip u pločici se aktivira kada klijent prisloni telefon. Telefon očita link i otvara stranicu — bez aplikacije, bez registracije.</p>" } },
+        "q5": { "type": "qa", "settings": { "question": "Koliko vremena je potrebno da dobijem svoju porudžbinu?", "answer": "<p>Pločice se izrađuju 2-3 radna dana, dostava traje 1-2 dana. Ukupno 3-5 radnih dana od porudžbine.</p>" } },
+        "q6": { "type": "qa", "settings": { "question": "Imate još pitanja?", "answer": "<p>Kontaktirajte nas na <a href=\"mailto:kontakt@tapflow.shop\">kontakt@tapflow.shop</a> ili preko forme ispod.</p>" } }
+      },
+      "block_order": ["q1","q2","q3","q4","q5","q6"],
+      "settings": { "heading": "Često postavljana pitanja" }
     }
   },
   "order": [
@@ -109,6 +122,7 @@
     "custom-featured-product",
     "custom-before-after",
     "custom-recommended",
-    "custom-how-it-works-v2"
+    "custom-how-it-works-v2",
+    "custom-faq"
   ]
 }
