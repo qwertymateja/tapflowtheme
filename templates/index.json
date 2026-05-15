@@ -58,7 +58,7 @@
         "t3": { "type": "tier", "settings": { "name": "3 PLOČICE", "description": "Besplatna dostava + stalak", "price": "7.199 RSD", "compare_price": "9.597 RSD", "badge": "Uštedeli 2.398 RSD", "quantity": 3 } },
         "t4": { "type": "tier", "settings": { "name": "5 PLOČICA", "description": "Besplatna dostava + stalak", "price": "10.999 RSD", "compare_price": "15.995 RSD", "badge": "Uštedeli 4.996 RSD", "quantity": 5 } },
         "d1": { "type": "detail", "settings": { "icon": "doc", "label": "Opis proizvoda", "content": "<p>NFC pločica koja omogućava klijentima da jednim dodirom telefona ostave recenziju na Google-u.</p>" } },
-        "d2": { "type": "detail", "settings": { "icon": "clock", "label": "Rok izrade", "content": "<p>Pločice se izrađuju u roku od 2-3 radna dana, dostava traje dodatnih 1-2 dana.</p>" } }
+        "d2": { "type": "detail", "settings": { "icon": "clock", "label": "Rok izrade", "content": "<p>Pločice se izrađuju u roku od 2-3 radna dana, dostava traje additnih 1-2 dana.</p>" } }
       },
       "block_order": ["f1","f2","f3","f4","t1","t2","t3","t4","d1","d2"],
       "settings": {
@@ -111,6 +111,10 @@
       },
       "block_order": ["q1","q2","q3","q4","q5","q6"],
       "settings": { "heading": "Često postavljana pitanja" }
+    },
+    "custom-contact": {
+      "type": "custom-contact",
+      "settings": {}
     }
   },
   "order": [
@@ -123,6 +127,7 @@
     "custom-before-after",
     "custom-recommended",
     "custom-how-it-works-v2",
-    "custom-faq"
+    "custom-faq",
+    "custom-contact"
   ]
 }

@@ -1,0 +1,187 @@
+<style>
+  .tf-contact {
+    padding-block: clamp(var(--tf-space-12), 8vw, var(--tf-space-20));
+    background: var(--tf-bg-subtle);
+    position: relative;
+    overflow: hidden;
+  }
+  .tf-contact__bg-blob {
+    position: absolute;
+    bottom: -120px;
+    right: -100px;
+    width: 420px;
+    height: 420px;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--tf-gold-100) 0%, transparent 70%);
+    opacity: 0.5;
+    filter: blur(60px);
+    z-index: 0;
+    pointer-events: none;
+  }
+  .tf-contact__grid {
+    display: grid;
+    grid-template-columns: 5fr 6fr;
+    gap: clamp(var(--tf-space-8), 5vw, var(--tf-space-16));
+    align-items: start;
+    position: relative;
+    z-index: 1;
+  }
+  @media (max-width: 749px) {
+    .tf-contact__grid { grid-template-columns: 1fr; gap: var(--tf-space-8); }
+  }
+  .tf-contact__intro h2 { margin-top: 0; }
+  .tf-contact__form {
+    display: grid;
+    gap: var(--tf-space-4);
+    background: var(--tf-white);
+    padding: clamp(var(--tf-space-6), 4vw, var(--tf-space-10));
+    border-radius: var(--tf-radius-lg);
+    box-shadow: var(--tf-shadow-lg);
+    border: 1px solid var(--tf-ink-100);
+  }
+  .tf-contact__row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--tf-space-4);
+  }
+  @media (max-width: 549px) {
+    .tf-contact__row { grid-template-columns: 1fr; }
+  }
+  .tf-contact__field { position: relative; }
+  .tf-contact__field input,
+  .tf-contact__field textarea {
+    width: 100%;
+    padding: 1rem 1.125rem;
+    background: var(--tf-bg-subtle);
+    border: 1.5px solid var(--tf-ink-200);
+    border-radius: var(--tf-radius-md);
+    font-family: var(--tf-font-sans);
+    font-size: var(--tf-text-base);
+    color: var(--tf-text);
+    transition:
+      border-color var(--tf-duration-base) var(--tf-ease-out),
+      box-shadow var(--tf-duration-base) var(--tf-ease-out),
+      background-color var(--tf-duration-base) var(--tf-ease-out);
+    outline: none;
+  }
+  .tf-contact__field textarea { resize: vertical; min-height: 120px; }
+  .tf-contact__field input:focus,
+  .tf-contact__field textarea:focus {
+    border-color: var(--tf-indigo-500);
+    background: var(--tf-white);
+    box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.12);
+  }
+  .tf-contact__field input::placeholder,
+  .tf-contact__field textarea::placeholder {
+    color: var(--tf-ink-400);
+  }
+  .tf-contact__submit {
+    width: 100%;
+    padding: 1rem 1.75rem;
+    font-family: var(--tf-font-sans);
+    font-size: var(--tf-text-sm);
+    font-weight: 700;
+    letter-spacing: var(--tf-tracking-wide);
+    text-transform: uppercase;
+    background: var(--tf-indigo-500);
+    color: var(--tf-white);
+    border: none;
+    border-radius: var(--tf-radius-full);
+    cursor: pointer;
+    transition:
+      transform var(--tf-duration-base) var(--tf-ease-out),
+      background-color var(--tf-duration-base) var(--tf-ease-out),
+      box-shadow var(--tf-duration-base) var(--tf-ease-out);
+    box-shadow: var(--tf-shadow-indigo);
+    margin-top: var(--tf-space-2);
+  }
+  .tf-contact__submit:hover {
+    background: var(--tf-indigo-600);
+    transform: translateY(-2px);
+    box-shadow:
+      0 12px 32px rgba(79, 70, 229, 0.30),
+      0 24px 64px rgba(79, 70, 229, 0.18);
+  }
+  .tf-contact__success,
+  .tf-contact__error {
+    padding: var(--tf-space-4);
+    border-radius: var(--tf-radius-md);
+    font-size: var(--tf-text-sm);
+    margin-bottom: var(--tf-space-2);
+  }
+  .tf-contact__success {
+    background: rgba(16, 185, 129, 0.1);
+    color: #047857;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+  }
+  .tf-contact__error {
+    background: rgba(239, 68, 68, 0.1);
+    color: #b91c1c;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+  }
+</style>
+
+<section class="tf-contact">
+  <div class="tf-contact__bg-blob" aria-hidden="true"></div>
+  <div class="tf-container">
+    <div class="tf-contact__grid">
+      <div class="tf-contact__intro tf-reveal">
+        {%- if section.settings.eyebrow != blank -%}
+          <span class="tf-eyebrow">{{ section.settings.eyebrow | escape }}</span>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h2 class="tf-section-title">{{ section.settings.heading | escape }}</h2>
+        {%- endif -%}
+        {%- if section.settings.body != blank -%}
+          <div class="tf-section-subtitle" style="margin-top: var(--tf-space-4);">{{ section.settings.body }}</div>
+        {%- endif -%}
+      </div>
+
+      <div class="tf-reveal tf-reveal--delay-1">
+        {%- form 'contact', class: 'tf-contact__form' -%}
+          {%- if form.posted_successfully? -%}
+            <div class="tf-contact__success">{{ section.settings.success_text | default: 'Hvala! Javićemo vam se u najkraćem roku.' | escape }}</div>
+          {%- endif -%}
+          {%- if form.errors -%}
+            <div class="tf-contact__error">
+              {{ form.errors | default_errors }}
+            </div>
+          {%- endif -%}
+
+          <div class="tf-contact__row">
+            <div class="tf-contact__field">
+              <input type="text" name="contact[name]" placeholder="Ime i prezime" required>
+            </div>
+            <div class="tf-contact__field">
+              <input type="email" name="contact[email]" placeholder="Email" required>
+            </div>
+          </div>
+          <div class="tf-contact__field">
+            <input type="tel" name="contact[phone]" placeholder="Broj telefona">
+          </div>
+          <div class="tf-contact__field">
+            <textarea name="contact[body]" placeholder="Poruka" rows="4" required></textarea>
+          </div>
+          <button type="submit" class="tf-contact__submit">
+            {{ section.settings.button_text | default: 'KONTAKTIRAJTE NAS' | escape }}
+          </button>
+        {%- endform -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Contact form",
+  "class": "section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Kontakt" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Želite da personalizujete proizvod ili poručite na veliko?" },
+    { "type": "richtext", "id": "body", "label": "Body text", "default": "<p>Personalizovana pločica ili veći broj proizvoda? Bez brige, prilagodićemo se 100% vašim potrebama. Popunite formu, a mi ćemo vas kontaktirati u najkraćem roku sa svim potrebnim detaljima.</p>" },
+    { "type": "text", "id": "button_text", "label": "Submit button text", "default": "KONTAKTIRAJTE NAS" },
+    { "type": "text", "id": "success_text", "label": "Success message", "default": "Hvala! Javićemo vam se u najkraćem roku." }
+  ],
+  "presets": [ { "name": "Contact form" } ]
+}
+{% endschema %}
