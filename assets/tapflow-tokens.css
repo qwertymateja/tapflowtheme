@@ -369,3 +369,76 @@ button, input, select, textarea {
 .tf-section-header--center .tf-section-subtitle {
   margin-inline: auto;
 }
+
+/* ============================================
+   FOOTER OVERRIDES (Dawn footer.liquid)
+   ============================================ */
+.footer {
+  background: var(--tf-ink-900) !important;
+  color: rgba(255, 255, 255, 0.75) !important;
+  position: relative;
+  padding-block: clamp(var(--tf-space-12), 6vw, var(--tf-space-16)) var(--tf-space-8) !important;
+}
+.footer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(to right,
+    transparent 0%,
+    var(--tf-gold-500) 50%,
+    transparent 100%);
+  opacity: 0.6;
+}
+.footer * { font-family: var(--tf-font-sans) !important; }
+.footer h2,
+.footer .footer-block__heading {
+  font-weight: 700 !important;
+  font-size: var(--tf-text-sm) !important;
+  text-transform: uppercase !important;
+  letter-spacing: var(--tf-tracking-wider) !important;
+  color: var(--tf-white) !important;
+  margin-bottom: var(--tf-space-4) !important;
+}
+.footer a {
+  color: rgba(255, 255, 255, 0.70) !important;
+  text-decoration: none !important;
+  transition: color var(--tf-duration-base) var(--tf-ease-out) !important;
+}
+.footer a:hover { color: var(--tf-gold-300) !important; }
+.footer .field__input,
+.footer input[type="email"] {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  border-radius: var(--tf-radius-full) !important;
+  color: var(--tf-white) !important;
+  padding: 0.875rem 1.25rem !important;
+}
+.footer .field__input::placeholder { color: rgba(255, 255, 255, 0.5) !important; }
+.footer .field__input:focus {
+  border-color: var(--tf-gold-500) !important;
+  background: rgba(255, 255, 255, 0.10) !important;
+}
+.footer .newsletter-form__button {
+  background: var(--tf-gold-gradient) !important;
+  color: var(--tf-ink-900) !important;
+  border-radius: 50% !important;
+  width: 44px !important;
+  height: 44px !important;
+}
+.footer__content-bottom,
+.footer__copyright {
+  border-top: 1px solid rgba(255, 255, 255, 0.10) !important;
+  padding-top: var(--tf-space-6) !important;
+  margin-top: var(--tf-space-8) !important;
+  font-size: var(--tf-text-xs) !important;
+  color: rgba(255, 255, 255, 0.50) !important;
+}
+.footer__list-social svg {
+  fill: rgba(255, 255, 255, 0.70) !important;
+}
+.footer__list-social a:hover svg {
+  fill: var(--tf-gold-300) !important;
+}
