@@ -18,6 +18,19 @@
       "type": "custom-social-proof-v2",
       "settings": {}
     },
+    "custom-cta-card": {
+      "type": "custom-cta-card",
+      "settings": {
+        "eyebrow": "Stvarni rezultati",
+        "heading_prefix": "Povećajte broj recenzija i do",
+        "heading_accent": "5X",
+        "heading_suffix": "u prvih 28 dana!",
+        "body": "<p>Na osnovu prosečnih rezultata naših korisnika. Svaki dan ste u kontaktu sa svojim kupcima — ne propuštajte priliku da prikupite više Google recenzija.</p>",
+        "button_text": "PORUČITE PLOČICU",
+        "button_link": "/collections/all",
+        "secondary_text": "Besplatna dostava • Garancija 30 dana"
+      }
+    },
     "featured_collection": {
       "type": "featured-collection",
       "settings": {
@@ -44,6 +57,7 @@
     "custom-marquee",
     "custom-hero-v2",
     "custom-social-proof-v2",
+    "custom-cta-card",
     "featured_collection"
   ]
 }
